@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+server_display/venv/
+
+# Runtime data — not meant to ship in the repo (real inventory data, local machine state)
+server_display/consommable_batiment_c.sqlite
+server_display/metrics.sqlite
+server_display/backups/
+server_display/photos/
+Inventaire consomato.xlsx
+
+# Local Claude Code settings (machine-specific paths)
+.claude/
+server_display/.claude/
+
+# Private, not meant to be checked in
+CLAUDE.local.md

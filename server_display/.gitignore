@@ -1,0 +1,3 @@
+# Local secrets — SMTP host/password for the low-stock alert live here or in the machine env.
+send_alert.bat
+.env

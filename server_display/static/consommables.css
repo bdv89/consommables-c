@@ -1,0 +1,389 @@
+/* Consumables inventory — quantity control, stock badges, photos, movement journal. */
+
+/* --- Quantity control ----------------------------------------------------- */
+/* The cell IS the control: [−] 33 [+]. Same idea as the click-to-cycle wear badge of
+   the cibles fork — the value and the action live in one place instead of behind a modal. */
+.qty-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.qty-btn {
+  border: 1px solid var(--line, #D1CFC6);
+  background: var(--bg-1, #fff);
+  color: var(--ink, #000);
+  border-radius: 6px;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+.qty-btn:hover:not(:disabled) {
+  border-color: var(--blue, #4385BE);
+  color: var(--blue, #4385BE);
+}
+.qty-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+:root[data-theme="dark"] .qty-btn {
+  background: transparent;
+}
+
+.qty-value {
+  min-width: 3ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  cursor: text;
+  padding: 0 2px;
+  border-radius: 4px;
+}
+.qty-value:hover {
+  background: var(--bg-2, #F2F0E5);
+}
+
+input.qty-input {
+  width: 6ch;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  padding: 2px 4px;
+  box-sizing: border-box;
+}
+
+/* --- Stock state ---------------------------------------------------------- */
+/* A word, not just a colour: the state has to survive a colour-blind reader and a
+   black-and-white print (WCAG 1.4.1). */
+.stock-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 0.74em;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+}
+.stock-badge.stock-rupture { background: var(--danger, #cf2e2e); }
+.stock-badge.stock-bas     { background: #C08A2D; }
+
+/* --- Photos --------------------------------------------------------------- */
+img.photo-thumb {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--line, #D1CFC6);
+  display: block;
+}
+.photo-empty {
+  color: var(--muted, #6F6E69);
+}
+img.photo-preview {
+  max-width: 160px;
+  max-height: 160px;
+  object-fit: contain;
+  border: 1px solid var(--line, #D1CFC6);
+  border-radius: 6px;
+  display: block;
+  margin: 6px 0;
+}
+input.photo-input {
+  font-size: 0.85em;
+}
+.btn-photo-clear {
+  border: 1px solid var(--line, #D1CFC6);
+  background: transparent;
+  color: var(--muted, #6F6E69);
+  border-radius: 6px;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 0.8em;
+  margin-top: 4px;
+}
+.btn-photo-clear:hover {
+  border-color: var(--danger, #cf2e2e);
+  color: var(--danger, #cf2e2e);
+}
+
+/* --- "Sous seuil" filter toggle ------------------------------------------- */
+.btn-filter {
+  border: 1px solid var(--line, #D1CFC6);
+  background: transparent;
+  color: var(--muted, #6F6E69);
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+.btn-filter:hover {
+  border-color: var(--danger, #cf2e2e);
+  color: var(--danger, #cf2e2e);
+}
+.btn-filter.active {
+  background: var(--danger, #cf2e2e);
+  border-color: var(--danger, #cf2e2e);
+  color: #fff;
+}
+
+/* --- Movement journal ----------------------------------------------------- */
+#table td[data-col="delta"] {
+  font-weight: 600;
+}
+#table td.delta-in  { color: var(--accent, #879A39); }
+#table td.delta-out { color: var(--danger, #cf2e2e); }
+
+#table td[data-col="article_code"].clickable {
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+}
+#table td[data-col="article_code"].clickable:hover {
+  background: var(--bg-2, #F2F0E5);
+}
+
+/* --- Remark (inline editing) ---------------------------------------------- */
+.cell-remarque {
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cell-remarque.editable {
+  cursor: text;
+  min-width: 60px;
+}
+.cell-remarque.editable:hover {
+  background: var(--bg-2, #F2F0E5);
+}
+.cell-remarque.empty-hint {
+  color: var(--muted, #6F6E69);
+}
+textarea.remarque-edit {
+  width: 100%;
+  min-width: 240px;
+  min-height: 46px;
+  resize: vertical;
+  font: inherit;
+  box-sizing: border-box;
+  padding: 4px 6px;
+}
+
+/* All-columns toggle bar: wrap onto multiple lines.
+   The selector must be #toggle-row (specificity 1,0,0) to beat the class-based rules. */
+#toggle-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* --- Pagination ----------------------------------------------------------- */
+.pager {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 4px;
+  flex-wrap: wrap;
+}
+.pager-btn {
+  border: 1px solid var(--blue, #4385BE);
+  background: #fff;
+  color: var(--blue, #4385BE);
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+.pager-btn:hover:not(:disabled) {
+  background: var(--blue, #4385BE);
+  color: #fff;
+}
+.pager-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.pager-info {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted, #6F6E69);
+}
+.pager-size {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font-size: 0.85em;
+  color: var(--muted, #6F6E69);
+}
+:root[data-theme="dark"] .pager-btn {
+  background: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   Selecteur de modele (etape 1 de la creation)
+
+   Ici et pas dans styles.css : le picker n'existe que sur index.html, alors que
+   styles.css est partage avec movements.html et metrics.html — les y mettre
+   invaliderait le cache de trois pages pour une seule.
+   --------------------------------------------------------------------------- */
+#edit-modal.picker-mode .modal-content {
+  max-width: 900px;
+}
+
+.picker.hidden,
+#form-step.hidden {
+  display: none;
+}
+
+.picker-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg-2);
+  color: var(--ink);
+}
+
+.picker-input:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: var(--bg-1);
+}
+
+.picker-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+/* Hauteur bornee : c'est elle qui fait defiler la liste au lieu du modal entier. */
+.picker-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 320px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-2);
+}
+
+.picker-option {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--line);
+}
+
+.picker-option:last-child {
+  border-bottom: none;
+}
+
+.picker-option:hover {
+  background: var(--bg-1);
+}
+
+.picker-option.active {
+  background: var(--blue);
+  color: #fff;
+}
+
+.picker-option-name {
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-option-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Le bleu de selection sert de fond : le texte secondaire doit repasser en clair,
+   sinon --muted sur --blue tombe sous le seuil de contraste. */
+.picker-option.active .picker-option-meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.picker-detail {
+  height: 320px;
+  overflow-y: auto;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-2);
+}
+
+.picker-detail h3 {
+  margin: 0 0 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.picker-detail-photo {
+  display: block;
+  max-width: 100%;
+  max-height: 120px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+.picker-detail dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(80px, auto) 1fr;
+  gap: 4px 12px;
+  font-size: 13px;
+}
+
+.picker-detail dt {
+  color: var(--muted);
+}
+
+.picker-detail dd {
+  margin: 0;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.picker-detail-empty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.picker-count {
+  margin: 10px 0 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+#picker-take:disabled,
+#picker-open:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+  .picker-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .picker-list,
+  .picker-detail {
+    height: 220px;
+  }
+}

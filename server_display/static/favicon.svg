@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Carton ouvert : rabats vert olive, corps blanc, ombre charbon.
+       Remplace la cible (bullseye) heritee de l'inventaire de cibles. -->
+  <path d="M4 22 L32 12 L60 22 L32 32 Z" fill="#879A39"/>
+  <path d="M4 22 L32 32 L32 56 L4 46 Z" fill="#ffffff" stroke="#32373c" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M60 22 L32 32 L32 56 L60 46 Z" fill="#e8e6dc" stroke="#32373c" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M4 22 L32 12 L60 22 L32 32 Z" fill="none" stroke="#32373c" stroke-width="2.5" stroke-linejoin="round"/>
+</svg>

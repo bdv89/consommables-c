@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Métriques — Consommables Bât. C</title>
+    <link rel="icon" href="favicon.svg?v=1" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=38" />
+    <script src="theme.js?v=4"></script>
+    <style>
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .section-title {
+        margin-top: 32px;
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+        color: var(--ink);
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 8px;
+        font-weight: 600;
+      }
+      .top-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+      .top-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--line);
+      }
+      .top-list li:last-child {
+        border-bottom: none;
+      }
+      .top-list .query {
+        font-family: "SF Mono", "Consolas", monospace;
+        color: var(--ink);
+      }
+      .top-list .count {
+        color: var(--accent);
+        font-weight: 700;
+      }
+      .two-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      @media (max-width: 768px) {
+        .two-columns {
+          grid-template-columns: 1fr;
+        }
+      }
+      .daily-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .daily-table th, .daily-table td {
+        padding: 12px 14px;
+        text-align: left;
+        border-bottom: 1px solid var(--line);
+      }
+      .daily-table th {
+        background: var(--bg-2);
+        font-weight: 600;
+      }
+      .daily-table td:nth-child(2),
+      .daily-table td:nth-child(3),
+      .daily-table th:nth-child(2),
+      .daily-table th:nth-child(3) {
+        text-align: right;
+      }
+      .endpoint-tag {
+        display: inline-block;
+        background: rgba(0, 208, 132, 0.12);
+        color: var(--accent-2);
+        padding: 3px 10px;
+        border-radius: 9999px;
+        font-family: "SF Mono", "Consolas", monospace;
+        font-size: 0.85rem;
+      }
+      .date-range {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="./" class="logo-link">
+        <img
+          src="https://www.materianova.be/app/uploads/2024/07/logo.mano_R_and_D.svg"
+          alt="Materianova"
+          class="site-logo"
+        />
+      </a>
+      <nav class="site-nav">
+        <a href="./">Inventaire</a>
+        <a href="movements.html">Mouvements</a>
+        <a href="metrics.html" class="active">Métriques</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Basculer clair/sombre">🌙</button>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Inventaire consommable bâtiment C</div>
+          <h1>Métriques d'utilisation</h1>
+          <p>Statistiques de consultation du serveur</p>
+          <p class="date-range" id="date-range"></p>
+        </div>
+        <a href="./" class="btn-back">← Retour à l'inventaire</a>
+      </section>
+
+      <!-- Summary cards -->
+      <section class="metrics-grid" id="summary-cards" style="margin-top: 24px;">
+        <div class="metric-card">
+          <div class="value" id="total-requests">-</div>
+          <div class="label">Requêtes totales</div>
+        </div>
+        <div class="metric-card">
+          <div class="value" id="total-searches">-</div>
+          <div class="label">Recherches</div>
+        </div>
+        <div class="metric-card">
+          <div class="value" id="unique-ips-total">-</div>
+          <div class="label">IPs uniques (total)</div>
+        </div>
+        <div class="metric-card">
+          <div class="value" id="unique-ips-today">-</div>
+          <div class="label">IPs uniques (aujourd'hui)</div>
+        </div>
+      </section>
+
+      <!-- Endpoints breakdown -->
+      <h3 class="section-title">Hits par endpoint</h3>
+      <section class="table-wrap">
+        <table class="daily-table" id="endpoints-table">
+          <thead>
+            <tr>
+              <th>Endpoint</th>
+              <th>Total</th>
+              <th>Dernière activité</th>
+            </tr>
+          </thead>
+          <tbody id="endpoints-tbody"></tbody>
+        </table>
+      </section>
+
+      <h3 class="section-title">Top recherches</h3>
+      <ul class="top-list" id="top-searches"></ul>
+
+      <!-- Daily stats -->
+      <h3 class="section-title">Activité par jour (30 derniers jours)</h3>
+      <section class="table-wrap">
+        <table class="daily-table" id="daily-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Requêtes</th>
+              <th>IPs uniques</th>
+            </tr>
+          </thead>
+          <tbody id="daily-tbody"></tbody>
+        </table>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <span>Inventaire consommable bâtiment C</span>
+        <span class="footer-sep">|</span>
+        <a href="https://www.materianova.be" target="_blank" rel="noopener">Materianova</a>
+      </div>
+    </footer>
+
+    <script src="metrics-app.js?v=2"></script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+# FastAPI server dependencies
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+aiosqlite>=0.19.0
+python-multipart>=0.0.6
+aiofiles>=23.2.0
+pydantic-settings>=2.0.0
+slowapi>=0.1.9
+openpyxl>=3.1
+
+# Optional: PDF parsing for certificats upload (phase 2)
+# pdfplumber>=0.9.0

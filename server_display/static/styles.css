@@ -1,0 +1,1414 @@
+/* ==========================================================================
+   MATERIANOVA DESIGN SYSTEM
+   Corporate modern, clean, professional
+   ========================================================================== */
+
+:root {
+  /* Palette Materianova */
+  --bg-1: #FFFFFF;
+  --bg-2: #F2F0E5;
+  --ink: #000000;
+  --muted: #6F6E69;
+  --accent: #879A39;         /* Vert olive */
+  --accent-light: #a3b356;   /* Vert olive clair */
+  --accent-2: #32373c;       /* Charbon (boutons) */
+  --blue: #4385BE;           /* Bleu (boutons actifs) */
+  --line: #D1CFC6;
+  --card: #FFFFFF;
+  --shadow: 0 2px 8px rgba(16, 15, 15, 0.08);
+
+  /* GHS / alertes */
+  --danger: #cf2e2e;
+  --warning: #ff6900;
+}
+
+/* ==========================================================================
+   DARK MODE — override des variables du design system
+   ========================================================================== */
+:root[data-theme="dark"] {
+  --bg-1: #17191b;
+  --bg-2: #22262a;
+  --ink: #e8e6df;
+  --muted: #9a9c96;
+  --accent: #a3b356;
+  --accent-light: #b8c76e;
+  --accent-2: #4a5157;
+  --blue: #5b9fd4;
+  --line: #34383c;
+  --card: #22262a;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --danger: #e5544f;
+  --warning: #ff8a3d;
+  color-scheme: dark;
+}
+
+/* Champs de saisie en sombre (au cas où un fond clair serait codé en dur) */
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select {
+  background: var(--bg-2);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+/* ==========================================================================
+   BOUTON MODE SOMBRE
+   ========================================================================== */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+.theme-toggle:hover {
+  background: var(--bg-2);
+  border-color: var(--accent);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg-1);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   SITE HEADER - Materianova branding
+   ========================================================================== */
+
+.site-header {
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.site-logo {
+  height: 36px;
+  width: auto;
+}
+
+.site-nav {
+  display: flex;
+  gap: 32px;
+}
+
+.site-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.site-nav a:hover {
+  color: var(--accent);
+}
+
+.site-nav a.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ==========================================================================
+   SITE FOOTER
+   ========================================================================== */
+
+.site-footer {
+  margin-top: 48px;
+  padding: 24px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.footer-sep {
+  color: var(--line);
+}
+
+.site-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+.shell {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  animation: rise 400ms ease-out;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+  padding: 32px 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+h1 {
+  margin: 8px 0 6px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hero p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   STATS CARDS
+   ========================================================================== */
+
+.stats-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stats {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   TOGGLE BUTTONS - Column visibility
+   ========================================================================== */
+
+.toggle-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.toggle-btn {
+  background: var(--bg-2);
+  color: var(--muted);
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.toggle-btn:hover {
+  background: var(--accent-2);
+  color: #fff;
+  border-color: var(--accent-2);
+}
+
+.toggle-btn.active {
+  background: var(--accent-2);
+  color: #fff;
+  border-color: var(--accent-2);
+}
+
+.toggle-btn:not(.active) {
+  opacity: 0.7;
+}
+
+/* Visually hidden but still accessible for file inputs */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   CONTROLS / SEARCH
+   ========================================================================== */
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.search-label {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+#search {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  padding: 12px 20px;
+  font-size: 15px;
+  background: var(--bg-2);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+#search:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.15);
+  background: var(--bg-1);
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   BUTTONS - Pill style Materianova
+   ========================================================================== */
+
+.btn-back,
+.btn-icpe {
+  padding: 10px 20px;
+  background: var(--accent-2);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.btn-back:hover,
+.btn-icpe:hover {
+  opacity: 0.85;
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-back:active,
+.btn-icpe:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   TABLE
+   ========================================================================== */
+
+.table-wrap {
+  margin-top: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: auto;
+  /* Le panneau defile EN INTERNE. Sans hauteur bornee il s'etirait sur toute la liste
+     (~6700px), ce qui avait deux consequences : la barre de defilement horizontale
+     partait hors de portee tout en bas, et le `position: sticky` des `th` ne s'activait
+     jamais (son scrollport, ce conteneur, ne defilait pas).
+     La hauteur est desormais donnee par le flex de .app-screen (voir plus bas) ; ce
+     max-height ne sert que de repli si la page n'utilise pas cette mise en page. */
+  max-height: 70vh;
+  min-height: 240px;
+}
+
+/* ==========================================================================
+   MISE EN PAGE PLEINE HAUTEUR (page inventaire uniquement)
+   Tout tient dans un ecran : seul le tableau defile. Scopee a .app-screen car
+   styles.css est partage avec categories.html / metrics.html, qui doivent
+   conserver un defilement de page normal.
+   ========================================================================== */
+
+/* 100dvh (dynamic viewport height) suit la barre d'adresse mobile qui se masque au
+   defilement ; `height: 100%` reste le repli pour les navigateurs sans dvh. */
+html:has(body.app-screen) { height: 100%; height: 100dvh; overflow: hidden; }
+
+body.app-screen {
+  height: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body.app-screen .shell {
+  flex: 1;
+  /* Les DEUX axes sont necessaires : un enfant flex refuse de retrecir sous la taille
+     intrinseque de son contenu tant qu'on ne neutralise pas `min-height`/`min-width: auto`.
+     Sans `min-width: 0`, sur un ecran de 412px le shell s'elargissait a 1225px pour contenir
+     le tableau, au lieu de laisser celui-ci defiler dans son panneau : `overflow: hidden`
+     sur body coupait alors 813px de contenu SANS aucun moyen d'y acceder. */
+  min-height: 0;
+  min-width: 0;
+  /* `.shell` porte `margin: 0 auto` (centrage). Or des marges AUTO sur l'axe transversal
+     DESACTIVENT l'etirement flex : l'element se dimensionne alors sur son contenu — 1225px
+     a cause du tableau — au lieu des 412px du telephone. D'ou une largeur explicite. */
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;     /* 24px partout etait trop genereux en hauteur contrainte */
+  gap: 10px;
+}
+
+body.app-screen .hero {
+  padding: 10px 16px;     /* etait 32px 24px : ~44px recuperes */
+  gap: 8px;
+}
+
+/* Le tableau absorbe tout l'espace restant, quels que soient les blocs au-dessus. */
+body.app-screen .table-wrap {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;   /* idem : sans ca le panneau s'elargit au lieu de faire defiler le tableau */
+  max-height: none;
+  margin-top: 0;
+}
+
+body.app-screen .pager { margin: 0; }
+
+/* --- ① Identite + navigation applicative : bandeau compact (66px -> ~46px) ------------- */
+body.app-screen .site-header { padding: 5px 20px; }
+body.app-screen .site-logo { height: 28px; }
+
+/* --- ② Agir : recherche a gauche (frequent), actions a droite (rare) ------------------- */
+body.app-screen .controls {
+  margin-top: 0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+body.app-screen .controls #search { flex: 1 1 260px; min-width: 200px; }
+body.app-screen .controls-actions {
+  margin-left: auto;   /* pousse les actions a l'oppose de la recherche */
+  display: flex;
+  gap: 8px;
+}
+
+/* --- ③ Configurer l'affichage --------------------------------------------------------- */
+body.app-screen .columns-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+body.app-screen .columns-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+body.app-screen .toggle-row { margin-top: 0; }
+
+/* --- ⑤ Se situer + naviguer ----------------------------------------------------------- */
+body.app-screen .statusbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;           /* ecart INTER-groupes, volontairement large */
+  flex-wrap: wrap;
+}
+body.app-screen .statusbar .stats-row { gap: 14px; }
+/* Compteurs en texte discret : en pastilles vert sature ils captaient l'attention au
+   detriment des donnees, et entraient en concurrence avec les badges d'etat (verts aussi),
+   qui eux portent une information. La couleur doit rester porteuse de sens. */
+body.app-screen .statusbar .stats {
+  background: none;
+  color: var(--muted);
+  padding: 0;
+  border-radius: 0;
+  font-weight: 500;
+  font-size: 12.5px;
+}
+body.app-screen .statusbar .pager { margin-left: auto; }
+body.app-screen .statusbar .pager-size { margin-left: 0; }
+
+/* Survol : distinct de l'etat actif. Avant, .toggle-btn:hover et .toggle-btn.active
+   partageaient exactement le meme style, donc survoler une colonne MASQUEE la faisait
+   paraitre active — etat illisible. */
+.toggle-btn:hover:not(.active) {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--accent-2);
+  opacity: 1;
+}
+
+/* --- Telephones / petits ecrans --------------------------------------------------------
+   Sans ces regles, les 5 bandes passent a la ligne et le decor occupe 53% d'un ecran
+   Android (482px sur 915), ne laissant que 379px au tableau. Le principe : tout ce qui
+   est une LISTE d'elements (bascules de colonnes, barre de statut) passe sur une seule
+   ligne qui defile horizontalement, au lieu de s'empiler sur 3-4 lignes.
+   -------------------------------------------------------------------------------------- */
+@media (max-width: 700px) {
+  /* `flex-direction: row` est indispensable : une regle heritee
+     `@media (max-width: 900px) { .site-header { flex-direction: column } }` empilait logo,
+     navigation et bouton de theme sur 3 lignes (126px). Les 3 tiennent en 356px de large. */
+  body.app-screen .site-header {
+    padding: 4px 10px;
+    gap: 8px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  body.app-screen .site-logo { height: 22px; }
+  body.app-screen .site-nav {
+    gap: 10px;
+    font-size: 13px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  body.app-screen .shell { padding: 8px 10px; gap: 8px; }
+  body.app-screen .controls { gap: 8px; }
+  body.app-screen .search-label { display: none; }   /* le placeholder suffit sur mobile */
+
+  /* Une seule ligne qui defile plutot que 4 lignes empilees (146px -> 32px).
+     NB : selecteur d'ID obligatoire — `#toggle-row { flex-wrap: wrap }` dans consommables.css
+     (specificite 1,0,0) battait une combinaison de classes. */
+  body.app-screen .columns-bar { min-width: 0; }
+  body.app-screen #toggle-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  body.app-screen #toggle-row .toggle-btn { flex: 0 0 auto; }
+
+  body.app-screen .statusbar {
+    gap: 12px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  body.app-screen .statusbar .stats-row { flex-wrap: nowrap; }
+  body.app-screen .statusbar .stats { white-space: nowrap; }
+  body.app-screen .statusbar .pager { flex-wrap: nowrap; }
+  body.app-screen .statusbar .pager-size { white-space: nowrap; }
+  body.app-screen .pager-btn { padding: 4px 8px; }
+}
+
+/* Ecran court ou zoom eleve (WCAG 1.4.4) : on redonne un defilement normal plutot
+   que de rogner le contenu. */
+@media (max-height: 520px) {
+  html:has(body.app-screen), body.app-screen { height: auto; overflow: auto; }
+  body.app-screen .table-wrap { flex: none; max-height: 60vh; min-height: 240px; }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   LARGEURS DE COLONNES — decouple la largeur du tableau de la QUALITE DES DONNEES.
+   En largeur automatique + white-space:nowrap, la cellule la plus large d'une colonne
+   imposait sa largeur aux 200 lignes : une seule saisie erronee (un bon de commande
+   tape dans "epaisseur") gonflait cette colonne de 40 a 314px, et le tableau debordait
+   de 572px. Avec table-layout:fixed, seule la ligne d'en-tete decide ; les valeurs
+   trop longues sont tronquees (ellipsis) et restent lisibles au survol via title.
+   Mesures a l'appui : epaisseur mediane = 3 caracteres, emplacement = 4.
+   ========================================================================== */
+#table { table-layout: fixed; }
+
+#table th:not([data-col])                 { width: 44px; }   /* bouton ✎ */
+#table th[data-col="code"]                { width: 92px; }
+#table th[data-col="photo"]               { width: 56px; }
+#table th[data-col="designation"]         { width: 300px; }
+#table th[data-col="reference"]           { width: 150px; }
+#table th[data-col="categorie"]           { width: 145px; }
+#table th[data-col="emplacement"]         { width: 120px; }
+#table th[data-col="quantite"]            { width: 150px; }
+#table th[data-col="seuil_min"]           { width: 70px; }
+#table th[data-col="unite"]               { width: 90px; }
+#table th[data-col="contenu_par_unite"]   { width: 85px; }
+#table th[data-col="fournisseur"]         { width: 120px; }
+#table th[data-col="remarque"]            { width: 200px; }
+
+/* Journal des mouvements (movements.html) — meme table id, colonnes differentes. */
+#table th[data-col="timestamp"]           { width: 140px; }
+#table th[data-col="article_code"]        { width: 100px; }
+#table th[data-col="delta"]               { width: 70px; }
+#table th[data-col="quantite_apres"]      { width: 80px; }
+#table th[data-col="motif"]               { width: 110px; }
+#table th[data-col="user_ip"]             { width: 120px; }
+
+/* Valeurs numeriques alignees a droite + chiffres a chasse fixe : c'est ce qui permet de
+   comparer des quantites d'un coup d'oeil (les unites se superposent verticalement). */
+#table th[data-col="seuil_min"],         #table td[data-col="seuil_min"],
+#table th[data-col="contenu_par_unite"], #table td[data-col="contenu_par_unite"],
+#table th[data-col="delta"],             #table td[data-col="delta"],
+#table th[data-col="quantite_apres"],    #table td[data-col="quantite_apres"] {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Affordance de tri : seuls les en-tetes REELLEMENT triables se comportent comme des
+   boutons. Avant, `cursor: pointer` s'appliquait a tous, y compris Documents et Dimensions
+   qui ne se trient pas cote serveur. */
+#table th.not-sortable { cursor: default; }
+#table th.sortable { cursor: pointer; }
+#table th.sortable:not(.sort-asc):not(.sort-desc)::after {
+  content: " ↕";
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+#table th.sortable:hover:not(.sort-asc):not(.sort-desc)::after { opacity: 0.45; }
+
+th, td {
+  /* Densite : 12px de padding vertical donnaient des lignes de 51px (7 lignes visibles).
+     A 6px la ligne tombe a ~39px, soit 10 lignes — sans rien coder d'autre. */
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+  white-space: nowrap;
+  /* Avec table-layout:fixed, les valeurs trop longues sont tronquees proprement
+     plutot que d'elargir la colonne pour les 200 lignes (voir #table plus bas). */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  /* Au-dessus des lignes qui defilent dessous. Le fond doit rester OPAQUE
+     (--bg-2 l'est dans les deux themes), sinon les lignes transparaissent. */
+  z-index: 2;
+  background: var(--bg-2);
+  text-align: left;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--ink);
+  transition: background 0.15s;
+}
+
+/* ==========================================================================
+   BASCULE DE THEME — coupure globale des transitions (pose par theme.js)
+   Un fond issu d'une variable (background: var(--bg-2)) combine a une transition sur
+   `background` reste FIGE sur la couleur de l'ancien theme jusqu'au rechargement.
+   Constate sur .btn-edit (charbon + glyphe noir en clair, contraste 1.38 : crayon
+   invisible) et sur th (texte clair sur fond clair, contraste 1.09).
+   Couper les transitions pendant la bascule corrige TOUTES les regles concernees,
+   y compris celles qu'on ajoutera plus tard, sans sacrifier les animations de survol.
+   ========================================================================== */
+:root.theme-switching *,
+:root.theme-switching *::before,
+:root.theme-switching *::after {
+  transition: none !important;
+}
+
+th:hover {
+  /* Valeur liee au theme : #e9ecef en dur produisait un gris clair sur fond sombre. */
+  background: var(--bg-1);
+}
+
+th.sort-asc::after {
+  content: " ↑";
+  color: var(--accent);
+}
+
+th.sort-desc::after {
+  content: " ↓";
+  color: var(--accent);
+}
+
+tbody tr:hover {
+  background: rgba(0, 208, 132, 0.04);
+}
+
+/* ==========================================================================
+   LINKS
+   ========================================================================== */
+
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+#table a {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   CELL STYLES
+   ========================================================================== */
+
+.wrap {
+  white-space: normal;
+  max-width: 520px;
+  line-height: 1.4;
+}
+
+.cell-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cell-title {
+  font-weight: 600;
+}
+
+.cell-sub {
+  color: var(--muted);
+}
+
+.cell-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cell-formula {
+  font-family: "SF Mono", "Consolas", "Monaco", monospace;
+}
+
+.cell-purity {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   STATEMENTS (H/P)
+   ========================================================================== */
+
+.stmts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.stmt {
+  position: relative;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg-2);
+  font-family: "SF Mono", "Consolas", "Monaco", monospace;
+  font-size: 11px;
+  cursor: default;
+}
+
+.stmt:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 6px;
+  z-index: 20;
+  width: max-content;
+  max-width: min(720px, 80vw);
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--accent-2);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  white-space: normal;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.stmt[data-tip-pos="right"]:hover::after {
+  left: auto;
+  right: 0;
+}
+
+/* ==========================================================================
+   GHS PICTOGRAMS
+   ========================================================================== */
+
+.pictos {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.picto-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.picto {
+  position: relative;
+  width: 34px;
+  height: 34px;
+}
+
+.picto::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 2px solid var(--danger);
+  transform: rotate(45deg);
+  background: #fff;
+}
+
+.picto span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-family: "SF Mono", "Consolas", "Monaco", monospace;
+  color: var(--ink);
+}
+
+.picto.text {
+  width: auto;
+  height: auto;
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fff5f5;
+}
+
+.picto.text::before {
+  display: none;
+}
+
+.picto.text span {
+  position: static;
+  font-size: 11px;
+}
+
+/* ==========================================================================
+   HERO RIGHT SECTION
+   ========================================================================== */
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   TABS
+   ========================================================================== */
+
+.tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.tab {
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  background: var(--bg-2);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tab:hover {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--accent-2);
+}
+
+.tab.active {
+  background: var(--accent-2);
+  color: #fff;
+  border-color: var(--accent-2);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+#tab-inventory .controls {
+  margin-top: 16px;
+}
+
+#tab-inventory .table-wrap,
+#tab-icpe .table-wrap {
+  border-radius: 8px;
+}
+
+/* ==========================================================================
+   ICPE SUMMARY
+   ========================================================================== */
+
+.icpe-intro {
+  padding: 16px 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.icpe-intro p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+#icpe-table th:nth-child(2),
+#icpe-table td:nth-child(2),
+#icpe-table th:nth-child(3),
+#icpe-table td:nth-child(3) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#icpe-table td:first-child {
+  font-weight: 500;
+}
+
+#icpe-table tr.highlight td {
+  background: rgba(0, 208, 132, 0.06);
+}
+
+#icpe-table .category-volume {
+  color: var(--accent);
+}
+
+#icpe-table .category-mass {
+  color: var(--accent-2);
+}
+
+/* ==========================================================================
+   METRICS SECTION
+   ========================================================================== */
+
+.metrics-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.metrics-title {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.metric-card .value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.metric-card .label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.metrics-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: var(--accent-2);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.metrics-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .site-header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .site-nav {
+    gap: 20px;
+  }
+
+  .hero {
+    padding: 24px 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  #search {
+    width: 100%;
+  }
+
+  .controls {
+    flex-wrap: wrap;
+  }
+
+  .tabs {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .shell {
+    padding: 16px;
+  }
+
+  .site-nav {
+    gap: 16px;
+    font-size: 14px;
+  }
+
+  .stats {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  th, td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+}
+
+/* ==========================================================================
+   UPLOAD BUTTONS
+   ========================================================================== */
+
+.upload-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.upload-in {
+  background: var(--blue);
+  color: #fff;
+}
+
+.upload-out {
+  background: var(--accent-2);
+  color: #fff;
+}
+
+.upload-btn:hover {
+  opacity: 0.85;
+}
+
+.upload-btn:active {
+  transform: scale(0.97);
+}
+
+/* Upload toast notification */
+.upload-status {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 14px 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.upload-status.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.upload-status.success {
+  border-left: 4px solid var(--accent);
+}
+
+.upload-status.error {
+  border-left: 4px solid var(--danger);
+}
+
+.upload-status.uploading {
+  border-left: 4px solid var(--warning);
+}
+
+/* ==========================================================================
+   MOBILE: Bigger upload buttons
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .upload-buttons {
+    width: 100%;
+    justify-content: center;
+    gap: 12px;
+    order: 10;
+  }
+
+  .upload-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 16px;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 600px) {
+  .upload-buttons {
+    gap: 10px;
+  }
+
+  .upload-btn {
+    padding: 16px 24px;
+    font-size: 17px;
+    min-height: 52px;
+    font-weight: 600;
+  }
+
+  .upload-status {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+/* ==========================================================================
+   EDIT MODAL
+   ========================================================================== */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--bg-1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.modal-content h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+#edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.form-group input {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--bg-2);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.15);
+  background: var(--bg-1);
+}
+
+.field-warning {
+  font-size: 12px;
+  color: var(--warning);
+  padding: 4px 0;
+}
+
+.field-warning.hidden {
+  display: none;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.btn-save,
+.btn-cancel,
+.btn-delete,
+.btn-add,
+.btn-export {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.btn-save {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-cancel {
+  background: var(--bg-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.btn-delete {
+  background: var(--danger);
+  color: #fff;
+  margin-right: auto;
+}
+
+.btn-add {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn-add.hidden {
+  display: none;
+}
+
+.btn-export {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn-save:hover,
+.btn-cancel:hover,
+.btn-delete:hover,
+.btn-add:hover,
+.btn-export:hover {
+  opacity: 0.85;
+}
+
+.btn-save:active,
+.btn-cancel:active,
+.btn-delete:active,
+.btn-add:active,
+.btn-export:active {
+  transform: scale(0.98);
+}
+
+.edit-status {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.edit-status.hidden {
+  display: none;
+}
+
+.edit-status.success {
+  background: rgba(0, 208, 132, 0.1);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.edit-status.error {
+  background: rgba(207, 46, 46, 0.1);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+/* Edit button in table rows */
+.btn-edit {
+  padding: 4px 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-edit:hover {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
+/* Responsive modal */
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 20px;
+  }
+
+  .modal-actions {
+    flex-wrap: wrap;
+  }
+
+  .btn-delete {
+    margin-right: 0;
+    order: 3;
+    width: 100%;
+    margin-top: 8px;
+  }
+}

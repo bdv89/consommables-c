@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inventaire consommable bâtiment C — Materianova</title>
+    <link rel="icon" href="favicon.svg?v=1" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=38" />
+    <link rel="stylesheet" href="consommables.css?v=2" />
+    <script src="theme.js?v=4"></script>
+  </head>
+  <!-- app-screen : mise en page pleine hauteur, tout tient dans un ecran, seul le tableau
+       defile. Classe portee par cette page uniquement — categories.html et metrics.html
+       partagent styles.css et doivent garder un defilement normal. -->
+  <body class="app-screen">
+    <header class="site-header">
+      <a href="./" class="logo-link">
+        <img
+          src="https://www.materianova.be/app/uploads/2024/07/logo.mano_R_and_D.svg"
+          alt="Materianova"
+          class="site-logo"
+        />
+      </a>
+      <!-- ① Navigation APPLICATIVE (on change de page). A ne pas confondre avec la
+           pagination (bande ⑤), qui navigue dans les donnees d'une meme page. -->
+      <nav class="site-nav" aria-label="Navigation principale">
+        <a href="./" class="active" aria-current="page">Inventaire</a>
+        <a href="movements.html">Mouvements</a>
+        <a href="metrics.html">Métriques</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Basculer clair/sombre">🌙</button>
+    </header>
+
+    <main class="shell">
+      <!-- SEPARATION DES RESPONSABILITES — une bande = une responsabilite, position stable :
+           ① identite + navigation applicative (site-header)  ② agir sur les donnees
+           ③ configurer l'affichage  ④ donnees + tri  ⑤ se situer + naviguer dans les donnees
+           Les ecarts intra-groupe (8px) sont volontairement plus serres que les ecarts
+           inter-groupes (24px) : sans cette difference, aucun regroupement n'est perceptible. -->
+
+      <!-- ② AGIR sur les donnees : chercher (frequent, a gauche) puis agir (rare, a droite). -->
+      <section class="controls">
+        <label for="search" class="search-label">Rechercher</label>
+        <input
+          id="search"
+          type="search"
+          placeholder="désignation, référence, catégorie, emplacement…  ( / pour y accéder)"
+          autocomplete="off"
+        />
+        <div class="meta" id="meta"></div>
+        <div class="controls-actions">
+          <button
+            id="low-toggle"
+            class="btn-filter"
+            type="button"
+            aria-pressed="false"
+            title="N'afficher que les articles sous leur seuil"
+          >Sous seuil</button>
+          <button id="add-entry-btn" class="btn-add hidden" title="Ajouter un article">+</button>
+          <button id="export-btn" class="btn-export" title="Exporter la sélection en CSV">Exporter</button>
+        </div>
+      </section>
+
+      <!-- ③ CONFIGURER l'affichage : le libelle nomme la zone, sinon 14 pastilles flottent
+           sans dire de quoi elles parlent. -->
+      <div class="columns-bar">
+        <span class="columns-label" id="columns-label">Colonnes</span>
+        <div class="toggle-row" id="toggle-row" role="group" aria-labelledby="columns-label">
+          <!-- Un bouton bascule par colonne, généré par app.js -->
+        </div>
+      </div>
+
+      <!-- ④ DONNEES : le tri vit dans les en-tetes, au plus pres de ce qu'il trie. -->
+      <section class="table-wrap" id="main-table-wrap">
+        <table id="table">
+          <thead id="thead"></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </section>
+
+      <!-- ⑤ SE SITUER + NAVIGUER dans les donnees. Sous le tableau : c'est la que l'oeil
+           cherche une pagination, et elle reste visible puisque la page ne defile pas. -->
+      <div class="statusbar">
+        <div class="stats-row">
+          <span class="stats" id="stats">0 article</span>
+          <span class="stats" id="stats-seuil">Sous seuil 0</span>
+          <span class="stats" id="stats-rupture">Rupture 0</span>
+        </div>
+        <nav class="pager" aria-label="Pagination des résultats">
+          <button type="button" class="pager-btn pager-prev">◀ Précédent</button>
+          <span class="pager-info"></span>
+          <button type="button" class="pager-btn pager-next">Suivant ▶</button>
+          <label class="pager-size">
+            <span>par page</span>
+            <select class="pager-size-select">
+              <option value="100">100</option>
+              <option value="200" selected>200</option>
+              <option value="500">500</option>
+            </select>
+          </label>
+        </nav>
+      </div>
+    </main>
+
+    <!-- Pied de page retire ici (70px purement decoratifs). Conserve sur les autres pages. -->
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="edit-modal-title">Modifier l'article</h2>
+
+        <!-- Etape 1 (creation seulement) : reprendre un article existant comme modele.
+             Le selecteur sert autant de garde-fou : deux lignes pour le meme article
+             scinderaient son stock, donc on montre ce qui existe deja avant de creer. -->
+        <div id="picker-step" class="picker hidden">
+          <input id="picker-input" type="search" class="picker-input" autocomplete="off"
+                 role="combobox" aria-expanded="false" aria-controls="picker-list"
+                 aria-autocomplete="list" aria-label="Rechercher un article existant"
+                 placeholder="Désignation, référence ou code…" />
+          <div class="picker-panels">
+            <ul id="picker-list" class="picker-list" role="listbox"
+                aria-label="Articles déjà inventoriés"></ul>
+            <div id="picker-detail" class="picker-detail"></div>
+          </div>
+          <p id="picker-count" class="picker-count" role="status"></p>
+          <div class="modal-actions">
+            <button type="button" class="btn-save" id="picker-take" disabled
+                    onclick="EditModal.take()">Reprendre cette fiche</button>
+            <button type="button" class="btn-cancel" id="picker-open" disabled
+                    onclick="EditModal.openSelected()">Ouvrir cette fiche</button>
+            <button type="button" class="btn-cancel" onclick="EditModal.blank()">Fiche vierge</button>
+            <button type="button" class="btn-cancel" onclick="EditModal.close()">Annuler</button>
+          </div>
+        </div>
+
+        <!-- Etape 2 : le formulaire, inchange. -->
+        <div id="form-step">
+          <form id="edit-form">
+            <!-- Fields generated by edit.js -->
+          </form>
+          <div id="edit-status" class="edit-status hidden"></div>
+          <div class="modal-actions">
+            <button type="button" class="btn-save" onclick="EditModal.save()">Enregistrer</button>
+            <button type="button" class="btn-cancel" onclick="EditModal.close()">Annuler</button>
+            <button type="button" class="btn-delete" onclick="EditModal.delete()">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js?v=2"></script>
+    <script src="edit.js?v=2"></script>
+  </body>
+</html>

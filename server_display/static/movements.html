@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mouvements — Consommables Bât. C</title>
+    <link rel="icon" href="favicon.svg?v=1" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=38" />
+    <link rel="stylesheet" href="consommables.css?v=1" />
+    <script src="theme.js?v=4"></script>
+  </head>
+  <!-- Pas de classe app-screen ici : cette page garde un defilement normal, comme
+       metrics.html. styles.css est partage par les trois pages. -->
+  <body>
+    <header class="site-header">
+      <a href="./" class="logo-link">
+        <img
+          src="https://www.materianova.be/app/uploads/2024/07/logo.mano_R_and_D.svg"
+          alt="Materianova"
+          class="site-logo"
+        />
+      </a>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <a href="./">Inventaire</a>
+        <a href="movements.html" class="active" aria-current="page">Mouvements</a>
+        <a href="metrics.html">Métriques</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Basculer clair/sombre">🌙</button>
+    </header>
+
+    <main class="shell">
+      <section class="controls">
+        <label for="filter-code" class="search-label">Article</label>
+        <input
+          id="filter-code"
+          type="search"
+          placeholder="code article (ex. CONS-001)"
+          autocomplete="off"
+        />
+        <label for="filter-motif" class="search-label">Motif</label>
+        <select id="filter-motif">
+          <option value="">tous</option>
+        </select>
+        <div class="meta" id="meta"></div>
+      </section>
+
+      <section class="table-wrap">
+        <table id="table">
+          <thead>
+            <tr>
+              <th data-col="timestamp">Date</th>
+              <th data-col="article_code">Article</th>
+              <th data-col="designation">Désignation</th>
+              <th data-col="delta">Δ</th>
+              <th data-col="quantite_apres">Après</th>
+              <th data-col="motif">Motif</th>
+              <th data-col="user_ip">Poste</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </section>
+
+      <div class="statusbar">
+        <div class="stats-row">
+          <span class="stats" id="stats">0 mouvement</span>
+        </div>
+        <nav class="pager" aria-label="Pagination du journal">
+          <button type="button" class="pager-btn pager-prev">◀ Précédent</button>
+          <span class="pager-info"></span>
+          <button type="button" class="pager-btn pager-next">Suivant ▶</button>
+        </nav>
+      </div>
+    </main>
+
+    <script src="movements-app.js?v=1"></script>
+  </body>
+</html>
